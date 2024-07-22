@@ -19,4 +19,8 @@ export class BookAppointmentController {
     handleBookAppointmentCanceled(bookAppointment: any) {
         this.bookAppointmentService.bookAppointmentCanceled(bookAppointment)
     }
+    @EventPattern('book-appointment-payment')
+    handleBookAppointmentPayment(data: any) {
+        this.bookAppointmentService.bookAppointmentPayment(data)
+    }
 }

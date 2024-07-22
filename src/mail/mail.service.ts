@@ -93,6 +93,21 @@ export class MailService {
         }).catch(error => console.log(error)
         )
     }
+
+    async sendMailToClientBookAppoiontmentPayment(data: any) {
+        const { customerId, name, email, amount, currency, appName } = data
+        await this.mailerService.sendMail({
+            to: email,
+            from: process.env.NO_REPLY,
+            // from: '"Support Team" <support@example.com>', // override default from
+            subject: 'Payment For Booked Appointment Completion',
+            template: './client/book-appointment-completed-payment', // `.hbs` extension is appended automatically
+            context: { // ✏️ filling curly brackets with content
+                customerId, name, email, amount, currency, appName
+            },
+        }).catch(error => console.log(error)
+        )
+    }
     // async sendUserConfirmation(user: User, token: string) {
     //     const url = `example.com/auth/confirm?token=${token}`;
 

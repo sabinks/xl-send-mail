@@ -35,4 +35,11 @@ export class BookAppointmentService {
         await this.mailService.sendMailToClientBookAppoiontmentCanceled(bookAppointment)
         console.log('Book Appointment Canceled Mail Sent!');
     }
+
+    async bookAppointmentPayment(data: any) {
+        console.log(data);
+
+        // await this.mailService.sendMailToClientBookAppoiontmentCanceled(data)
+        console.log('Book Appointment Canceled Mail Sent!');
+    }
 }
