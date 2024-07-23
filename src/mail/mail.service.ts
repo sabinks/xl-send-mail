@@ -1,5 +1,6 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
+import { BookAppointmentPaymentDto } from './dto/book-appointment-payment.dto';
 
 @Injectable()
 export class MailService {
@@ -94,8 +95,8 @@ export class MailService {
         )
     }
 
-    async sendMailToClientBookAppoiontmentPayment(data: any) {
-        const { customerId, name, email, amount, currency, appName } = data
+    async sendMailToClientBookAppoiontmentPayment(data: BookAppointmentPaymentDto) {
+        const { customerId, name, email, amount, currency, appName, paymentUrl } = data
         await this.mailerService.sendMail({
             to: email,
             from: process.env.NO_REPLY,
@@ -103,7 +104,7 @@ export class MailService {
             subject: 'Payment For Booked Appointment Completion',
             template: './client/book-appointment-completed-payment', // `.hbs` extension is appended automatically
             context: { // ✏️ filling curly brackets with content
-                customerId, name, email, amount, currency, appName
+                customerId, name, email, amount, currency, appName, paymentUrl
             },
         }).catch(error => console.log(error)
         )
