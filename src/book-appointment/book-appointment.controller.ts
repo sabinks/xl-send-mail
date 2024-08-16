@@ -8,6 +8,8 @@ export class BookAppointmentController {
 
     @EventPattern('book-appointment.created')
     handleBookAppointmentCreated(@Payload() bookAppointment: any) {
+        console.log('event hit');
+
         this.bookAppointmentService.bookAppointmentCreated(bookAppointment)
     }
 

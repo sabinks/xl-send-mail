@@ -1,0 +1,31 @@
+services:
+  nestjs_app1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nestjs_mail_server
+    restart: on-failure
+    ports:
+      - 3081:3000
+    environment:
+      - SERVER_NAME="Mail Server"
+      - PORT=3081
+      - NODE_ENV="production"
+    env_file:
+      - .env.production
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    external: true
+  # nestjs_network:
+  # driver: bridge
+  # ipam:
+  #   config:
+  #     - subnet: 192.168.1.0/24
+  #       gateway: 192.168.1.1
+
+volumes:
+  nestjsdbdata:
+    driver: local

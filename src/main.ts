@@ -7,16 +7,20 @@ async function bootstrap() {
 
     });
     app.connectMicroservice({
+        global: true,
         transport: Transport.RMQ,
+        name: 'MAIL_SERVICE',
         options: {
-            urls: ['amqp://localhost:5672'],
+            urls: [process.env.NODE_ENV == 'development' ? 'amqp://localhost:5672' : `${process.env.RBMQ_URL}`],
             queue: 'mail_queue',
             queueOptions: {
                 durable: false
             },
         }
     })
-    let port = process.env.PORT || 3001;
+    let env = process.env.NODE_ENV
+    console.log('environment:', env);
+    let port = process.env.PORT
     await app.startAllMicroservices()
     await app.listen(port);
     console.log('Main App running on:' + port);

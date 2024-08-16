@@ -15,10 +15,11 @@ import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 @Module({
     imports: [
         ConfigModule.forRoot({
-            envFilePath: ['.env'],
-            isGlobal: true
+            envFilePath: [`.env.${process.env.NODE_ENV}`],
+            isGlobal: true,
         }),
         ContactFormSendMailModule,
+
         MailerModule.forRoot({
             transport: {
                 host: process.env.EMAIL_HOST,
@@ -41,23 +42,23 @@ import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
         }),
         MailModule,
         ContactFormSendMailModule,
-        ClientsModule.register([
-            {
-                name: 'MAIL_SERVICE',
-                transport: Transport.RMQ,
-                options: {
-                    urls: ['amqp://localhost:5672'],
-                    queue: 'mail_queue',
-                    queueOptions: {
-                        durable: false
-                    },
-                },
-            },
-        ]),
+        // ClientsModule.register([
+        //     {
+        //         name: 'MAIL_SERVICE',
+        //         transport: Transport.RMQ,
+        //         options: {
+        //             urls: [process.env.NODE_ENV == 'development' ? 'amqp://localhost:5672' : `${process.env.RBMQ_URL}`],
+        //             queue: 'mail_queue',
+        //             queueOptions: {
+        //                 durable: false
+        //             },
+        //         },
+        //     },
+        // ]),
         BookAppointmentModule,
         ForgotPasswordModule,
     ],
-    controllers: [AppController,],
+    controllers: [AppController],
     providers: [AppService, MailService],
     exports: [MailService]
 })
